@@ -1,0 +1,26 @@
+{
+    "ukulele": {
+        "tunings": [{
+            "tuning": "Standard High G",
+            "strings": ["G4", "C4", "E4", "A4"]
+        }, {
+            "tuning": "D-Tuning",
+            "strings": ["A4", "D4", "F#4", "B4"]
+        }, {
+            "tuning": "Low G",
+            "strings": ["G3", "C4", "E4", "A4"]
+        }, {
+            "tuning": "Canadian",
+            "strings": ["A3", "D4", "F#4", "B4"]
+        }, {
+            "tuning": "Baritone Ukulele",
+            "strings": ["D3", "G3", "B3", "E4"]
+        }]
+    },
+    "guitar": {
+        "tunings": [{
+                "tuning": "Standard",
+                "strings": ["E2", "A2", "D3", "G3","B3","E4"]
+            }]
+        }
+    }
