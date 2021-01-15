@@ -1,14 +1,12 @@
 import React, { createContext, useReducer } from "react";
 import * as actionTypes from "./actions/actionTypes";
-import Oscillator from "../util/oscillator";
+import Oscillator, { ASDR } from "../util/oscillator";
 
 let audioContext: AudioContext = new AudioContext();
 let out: AudioDestinationNode = audioContext.destination;
-let osc1: OscillatorNode = audioContext.createOscillator();
 let gain1: GainNode = audioContext.createGain();
 let filter: BiquadFilterNode = audioContext.createBiquadFilter();
 
-osc1.connect(gain1);
 gain1.connect(filter);
 filter.connect(out);
 
@@ -16,7 +14,6 @@ let nodes: Oscillator[] = [];
 
 interface IState {
 	osc1Settings: {
-		frequency: number;
 		detune: number;
 		type: OscillatorType;
 	};
@@ -27,17 +24,15 @@ interface IState {
 		Q: number;
 		gain: number;
 	};
+	envelope: ASDR;
 }
-type Action = BaseAction | ChangeValueAction | ChangeeTypeAction | MakeOSCAction | KillOSCAction;
+type Action = ChangeValueAction | ChangeTypeAction | MakeOSCAction | KillOSCAction;
 
-interface BaseAction {
-	type: actionTypes.START_OSC | actionTypes.STOP_OSC;
-}
 interface ChangeValueAction {
-	type: actionTypes.CHANGE_OSC1 | actionTypes.CHANGE_FIL;
+	type: actionTypes.CHANGE_OSC1 | actionTypes.CHANGE_FIL | actionTypes.CHANGE_ENVELOPE;
 	payload: { id: string; value: number };
 }
-interface ChangeeTypeAction {
+interface ChangeTypeAction {
 	type: actionTypes.CHANGE_OSC1_TYPE | actionTypes.CHANGE_FIL_TYPE;
 	payload: { id: string };
 }
@@ -53,14 +48,15 @@ interface KillOSCAction {
 
 function reducer(state: IState, action: Action) {
 	switch (action.type) {
-		case actionTypes.START_OSC:
-			osc1.start();
-			return { ...state };
-		case actionTypes.STOP_OSC:
-			osc1.stop();
-			return { ...state };
 		case actionTypes.MAKE_OSC:
-			const newOsc = new Oscillator(audioContext, "sawtooth", action.payload.freq, 0, gain1);
+			const newOsc = new Oscillator(
+				audioContext,
+				state.osc1Settings.type,
+				action.payload.freq,
+				state.osc1Settings.detune,
+				gain1,
+				state.envelope
+			);
 			nodes.push(newOsc);
 			return { ...state };
 		case actionTypes.KILL_OSC:
@@ -75,10 +71,8 @@ function reducer(state: IState, action: Action) {
 			return { ...state };
 		case actionTypes.CHANGE_OSC1:
 			let { id, value } = action.payload!;
-			(osc1[id as keyof OscillatorNode]! as any).value = value;
 			return { ...state, osc1Settings: { ...state.osc1Settings, [id]: value } };
 		case actionTypes.CHANGE_OSC1_TYPE:
-			osc1.type = action.payload!.id as OscillatorType;
 			return { ...state, osc1Settings: { ...state.osc1Settings, type: action.payload.id as OscillatorType } };
 		case actionTypes.CHANGE_FIL:
 			(filter[action.payload.id as keyof BiquadFilterNode] as any).value = action.payload.value;
@@ -86,6 +80,8 @@ function reducer(state: IState, action: Action) {
 		case actionTypes.CHANGE_FIL_TYPE:
 			filter.type = action.payload!.id as BiquadFilterType;
 			return { ...state, filterSettings: { ...state.filterSettings, type: action.payload.id as BiquadFilterType } };
+		case actionTypes.CHANGE_ENVELOPE:
+			return { ...state, envelope: { ...state.envelope, [action.payload.id]: action.payload.value } };
 		default:
 			return { ...state };
 	}
@@ -97,9 +93,8 @@ export { context };
 export default function StoreProvider(props: { children: React.ReactNode }) {
 	const [state, dispatch] = useReducer(reducer, {
 		osc1Settings: {
-			frequency: osc1.frequency.value,
-			detune: osc1.detune.value,
-			type: osc1.type,
+			detune: 0,
+			type: "sine",
 		},
 		filterSettings: {
 			frequency: filter.frequency.value,
@@ -107,6 +102,12 @@ export default function StoreProvider(props: { children: React.ReactNode }) {
 			type: filter.type,
 			Q: filter.Q.value,
 			gain: filter.gain.value,
+		},
+		envelope: {
+			attack: 0.005,
+			decay: 0.1,
+			sustain: 0.6,
+			release: 0.1,
 		},
 	});
 	const value = { state, dispatch };

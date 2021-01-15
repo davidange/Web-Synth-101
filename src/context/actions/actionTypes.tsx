@@ -1,9 +1,3 @@
-export const START_OSC = "START_OSC";
-export type START_OSC = "START_OSC";
-
-export const STOP_OSC = "STOP_OSC";
-export type STOP_OSC = "STOP_OSC";
-
 export const MAKE_OSC = "MAKE_OSC";
 export type MAKE_OSC = "MAKE_OSC";
 
@@ -21,3 +15,6 @@ export type CHANGE_FIL = "CHANGE_FIL";
 
 export const CHANGE_FIL_TYPE = "CHANGE_FIL_TYPE";
 export type CHANGE_FIL_TYPE = "CHANGE_FIL_TYPE";
+
+export const CHANGE_ENVELOPE = "CHANGE_ENVELOPE";
+export type CHANGE_ENVELOPE = "CHANGE_ENVELOPE";

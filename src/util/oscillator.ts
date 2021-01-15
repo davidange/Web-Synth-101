@@ -1,4 +1,4 @@
-interface ASDR {
+export interface ASDR {
 	attack: number;
 	decay: number;
 	sustain: number;

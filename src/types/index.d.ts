@@ -1,4 +1,4 @@
-export interface Note{
-    frequency:number,
-    name:string
+export interface Note {
+	frequency: number;
+	name: string;
 }
