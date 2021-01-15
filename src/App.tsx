@@ -24,8 +24,8 @@ function App() {
 				</div>
 				<Oscillator />
 				<Filter />
-				<Keyboard />
 			</div>
+			<Keyboard/>
 		</>
 	);
 }
