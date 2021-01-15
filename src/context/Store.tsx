@@ -1,4 +1,3 @@
-import { SSL_OP_PKCS1_CHECK_1 } from "constants";
 import React, { createContext, useReducer } from "react";
 import * as actionTypes from "./actions/actionTypes";
 
@@ -62,7 +61,7 @@ function reducer(state: IState, action: Action) {
 			filter.type = action.payload!.id as BiquadFilterType;
 			return { ...state, filterSettings: { ...state.filterSettings, type: (action.payload.id as BiquadFilterType) } };
 		default:
-			return state;
+			return {...state};
 	}
 }
 
