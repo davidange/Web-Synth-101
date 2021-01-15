@@ -16,7 +16,7 @@ const Oscillator: React.FC = () => {
 
 	return (
 		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 flex flex-col justify-center text-center">
-			<h2> osc1</h2>
+			<h2> Oscillator</h2>
 			<div>
 				<h3>detune</h3>
 				<input onChange={change} type="range" id="detune" value={detune} />
