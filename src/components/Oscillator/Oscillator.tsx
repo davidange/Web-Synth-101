@@ -6,12 +6,12 @@ const Oscillator: React.FC = () => {
 	const { state: appState, dispatch: updateState } = useContext(context);
 	let { detune, type } = appState.osc1Settings;
 	const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let { value, id } = e.target;
-		updateState({ type: actionTypes.CHANGE_OSC1, payload: { id, value: +value } });
+		let { value, name } = e.target;
+		updateState({ type: actionTypes.CHANGE_OSC1, payload: { id: name, value: +value } });
 	};
 	const changeType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		let id = (e.target as HTMLElement).id;
-		updateState({ type: actionTypes.CHANGE_OSC1_TYPE, payload: { id } });
+		let name = (e.target as HTMLInputElement).name;
+		updateState({ type: actionTypes.CHANGE_OSC1_TYPE, payload: { id: name } });
 	};
 
 	return (
@@ -19,7 +19,7 @@ const Oscillator: React.FC = () => {
 			<h2> Oscillator</h2>
 			<div>
 				<h3>detune</h3>
-				<input onChange={change} type="range" id="detune" value={detune} />
+				<input onChange={change} type="range" name="detune" value={detune} />
 			</div>
 
 			<div className="flex flex-col m-2 ">
@@ -28,7 +28,7 @@ const Oscillator: React.FC = () => {
 				{["sine", "sawtooth", "square", "triangle"].map((oscillatorType) => (
 					<button
 						className={"btn btn-secondary mt-2 " + ((type as string) === oscillatorType ? "btn-secondary-active " : "")}
-						id={oscillatorType}
+						name={oscillatorType}
 						key={oscillatorType}
 						onClick={changeType}
 					>

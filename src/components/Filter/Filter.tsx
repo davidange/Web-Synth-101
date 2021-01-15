@@ -23,13 +23,13 @@ const Filter: React.FC = () => {
 	const { state: appState, dispatch: updateState } = useContext(context);
 	let { frequency, detune, type, Q, gain } = appState.filterSettings;
 	const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let { value, id } = e.target;
+		let { value, name } = e.target;
 		console.log("CHANGING FILTER!!");
-		updateState({ type: actionTypes.CHANGE_FIL, payload: { id, value: +value } });
+		updateState({ type: actionTypes.CHANGE_FIL, payload: { id: name, value: +value } });
 	};
 	const changeType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		let id = (e.target as HTMLElement).id;
-		updateState({ type: actionTypes.CHANGE_FIL_TYPE, payload: { id } });
+		let name = (e.target as HTMLInputElement).name;
+		updateState({ type: actionTypes.CHANGE_FIL_TYPE, payload: { id: name } });
 	};
 
 	return (
@@ -37,18 +37,18 @@ const Filter: React.FC = () => {
 			<h2> Filter</h2>
 			<div>
 				<h3>frequency</h3>
-				<input onChange={change} max="10000" type="range" id="frequency" value={frequency} />
+				<input onChange={change} max="10000" type="range" name="frequency" value={frequency} />
 			</div>
 			<div>
 				<h3>detune</h3>
-				<input onChange={change} type="range" id="detune" value={detune} />
+				<input onChange={change} type="range" name="detune" value={detune} />
 			</div>
 			<div>
 				<h3>Q</h3>
 				<input
 					onChange={change}
 					type="range"
-					id="Q"
+					name="Q"
 					value={Q}
 					max="10"
 					step="0.1"
@@ -60,7 +60,7 @@ const Filter: React.FC = () => {
 				<input
 					onChange={change}
 					type="range"
-					id="gain"
+					name="gain"
 					value={gain}
 					max="10"
 					step="0.1"
@@ -74,7 +74,7 @@ const Filter: React.FC = () => {
 				{biquadFilterTypes.map((filterType) => (
 					<button
 						className={"btn btn-secondary mt-2 " + ((type as string) === filterType ? "btn-secondary-active " : "")}
-						id={filterType}
+						name={filterType}
 						key={filterType}
 						onClick={changeType}
 					>

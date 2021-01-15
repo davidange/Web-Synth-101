@@ -6,9 +6,11 @@ let audioContext: AudioContext = new AudioContext();
 let out: AudioDestinationNode = audioContext.destination;
 let gain1: GainNode = audioContext.createGain();
 let filter: BiquadFilterNode = audioContext.createBiquadFilter();
+let masterGain: GainNode = audioContext.createGain();
 
 gain1.connect(filter);
-filter.connect(out);
+filter.connect(masterGain);
+masterGain.connect(out);
 
 let nodes: Oscillator[] = [];
 
@@ -25,11 +27,14 @@ interface IState {
 		gain: number;
 	};
 	envelope: ASDR;
+	masterGain: {
+		gain: number;
+	};
 }
 type Action = ChangeValueAction | ChangeTypeAction | MakeOSCAction | KillOSCAction;
 
 interface ChangeValueAction {
-	type: actionTypes.CHANGE_OSC1 | actionTypes.CHANGE_FIL | actionTypes.CHANGE_ENVELOPE;
+	type: actionTypes.CHANGE_OSC1 | actionTypes.CHANGE_FIL | actionTypes.CHANGE_ENVELOPE | actionTypes.CHANGE_MASTER_GAIN;
 	payload: { id: string; value: number };
 }
 interface ChangeTypeAction {
@@ -82,6 +87,11 @@ function reducer(state: IState, action: Action) {
 			return { ...state, filterSettings: { ...state.filterSettings, type: action.payload.id as BiquadFilterType } };
 		case actionTypes.CHANGE_ENVELOPE:
 			return { ...state, envelope: { ...state.envelope, [action.payload.id]: action.payload.value } };
+		case actionTypes.CHANGE_MASTER_GAIN:
+			if (action.payload.id === "gain") {
+				masterGain.gain.value = action.payload.value;
+			}
+			return { ...state, masterGain: { ...state.masterGain, [action.payload.id]: action.payload.value } };
 		default:
 			return { ...state };
 	}
@@ -108,6 +118,9 @@ export default function StoreProvider(props: { children: React.ReactNode }) {
 			decay: 0.1,
 			sustain: 0.6,
 			release: 0.1,
+		},
+		masterGain: {
+			gain: filter.gain.value,
 		},
 	});
 	const value = { state, dispatch };
