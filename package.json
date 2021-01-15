@@ -15,7 +15,6 @@
     "@types/react-select": "^3.1.2",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
-    "qwerty-hancock": "^0.9.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-piano": "^3.1.3",
