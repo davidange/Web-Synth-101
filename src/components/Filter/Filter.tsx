@@ -1,16 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { context } from "../../context/Store";
+import * as actionTypes from "../../context/actions/actionTypes";
 import "../../styles/index.css";
-interface Props {
-	change: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	changeType: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-	settings: {
-		frequency: number;
-		detune: number;
-		type: BiquadFilterType;
-		Q: number;
-		gain: number;
-	};
-}
 
 const biquadFilterTypesUnusedParameters = {
 	allpass: ["gain"],
@@ -28,8 +19,19 @@ for (let key in biquadFilterTypesUnusedParameters) {
 	biquadFilterTypes.push(key);
 }
 
-const Filter: React.FC<Props> = ({ change, changeType, settings }) => {
-	let { frequency, detune, type, Q, gain } = settings;
+const Filter: React.FC = () => {
+	const { state: appState, dispatch: updateState } = useContext(context);
+	let { frequency, detune, type, Q, gain } = appState.filterSettings;
+	const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+		let { value, id } = e.target;
+		console.log("CHANGING FILTER!!");
+		updateState({ type: actionTypes.CHANGE_FIL, payload: { id, value: +value } });
+	};
+	const changeType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		let id = (e.target as HTMLElement).id;
+		updateState({ type: actionTypes.CHANGE_FIL_TYPE, payload: { id } });
+	};
+
 	return (
 		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 flex flex-col justify-center text-center">
 			<h2> Filter</h2>
