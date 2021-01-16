@@ -10,7 +10,7 @@ const MasterAudio = () => {
 		updateState({ type: actionTypes.CHANGE_MASTER_GAIN, payload: { id: name, value: value } });
 	};
 	return (
-		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 flex flex-col justify-center text-center">
+		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 col-start-1 flex flex-col justify-center text-center">
 			<h2>Master Volume</h2>
 			<div className="mx-auto">
 				<h3>Volume</h3>
