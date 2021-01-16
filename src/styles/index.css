@@ -26,4 +26,7 @@
     .btn-secondary-active{
         @apply btn bg-blue-600
     }
+    .unhidden{
+        display: inline
+    }
 }

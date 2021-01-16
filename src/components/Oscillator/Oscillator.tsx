@@ -16,9 +16,9 @@ const Oscillator: React.FC = () => {
 	};
 
 	return (
-		<div className="bg-gray-300 rounded-lg shadow-xl mt-2  pt-4 text-center lg:row-start-2 ">
+		<div className="bg-gray-300 rounded-lg shadow-xl mt-2  pt-4 text-center md:row-start-2 ">
 			<h2> Oscillator</h2>
-			<div className="p-2 flex flex-col justify-center xl:flex-row">
+			<div className="p-2 flex flex-col justify-center lg:flex-row">
 				<div className="m-2">
 					<h3>Detune</h3>
 					<Knob
@@ -32,7 +32,7 @@ const Oscillator: React.FC = () => {
 						rotateDegrees={180}
 						clampMin={30}
 						clampMax={330}
-						style={{ margin: "0 auto" }}
+						style={{ margin: "0 auto" ,width:"40px",height:"40px"}}
 					/>
 					<h4>{(detune / detuneMax).toFixed(2)}</h4>
 				</div>

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { context } from "./context/Store";
+import React from "react";
+
 import Oscillator from "./components/Oscillator/Oscillator";
 import Filter from "./components/Filter/Filter";
 import ADSR from "./components/ADSR/ADSR";
@@ -8,7 +8,6 @@ import Keyboard from "./components/Keyboard/Keyboard";
 import "./styles/index.css";
 
 function App() {
-	const { dispatch } = useContext(context);
 
 	return (
 		// ---Card component----------
