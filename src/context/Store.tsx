@@ -90,6 +90,7 @@ function reducer(state: IState, action: Action) {
 		case actionTypes.CHANGE_MASTER_GAIN:
 			if (action.payload.id === "gain") {
 				masterGain.gain.value = action.payload.value;
+				console.log(action.payload.value);
 			}
 			return { ...state, masterGain: { ...state.masterGain, [action.payload.id]: action.payload.value } };
 		default:

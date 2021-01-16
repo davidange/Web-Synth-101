@@ -22,7 +22,6 @@ const Keyboard = () => {
 	};
 	const keyboardReleased = (midiNumber: number) => {
 		// Stop playing a given note - see notes below
-		console.log("STOP");
 		let note = MidiNumbers.getAttributes(midiNumber).note;
 		let frequency = getFrequency(MidiNumbers.getAttributes(midiNumber).note);
 		updateState({ type: actionTypes.KILL_OSC, payload: { note, freq: frequency } });
