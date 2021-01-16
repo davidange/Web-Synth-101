@@ -14,8 +14,8 @@ function App() {
 		// ---Card component----------
 
 		<div className="grid  mx-auto p-6 bg-white">
-			<h1 className="mx-auto text-center text-xl">Oscillator</h1>
-			<div className="grid grid-cols-2 sm:grid-cols-3  gap-4" >
+			<h1 className="mx-auto text-center text-3xl">Oscillator</h1>
+			<div className="grid grid-cols-2 sm:grid-cols-3 gap-4" >
 				<MasterAudio />
 				<Oscillator />
 				<ADSR />

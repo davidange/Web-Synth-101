@@ -14,7 +14,7 @@ const ADSR = () => {
 	return (
 		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 pt-4 flex flex-col  text-center lg:row-span-2">
 			<h2>ADSR</h2>
-			<div className="grid grid-cols-2 justify-center p-2">
+			<div className="grid grid-cols-2 justify-center p-2 ">
 				<div className="m-2">
 					<h3>Attack</h3>
 					<Knob

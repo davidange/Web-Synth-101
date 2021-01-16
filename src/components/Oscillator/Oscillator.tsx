@@ -38,7 +38,7 @@ const Oscillator: React.FC = () => {
 				</div>
 
 				<div className="flex flex-col m-2 ">
-					<h3>wave</h3>
+					<h3>Wave</h3>
 					{/* Map the buttons of all the oscilator types */}
 					<div className="grid grid-cols-2">
 						{["sine", "sawtooth", "square", "triangle"].map((oscillatorType) => (
@@ -51,7 +51,7 @@ const Oscillator: React.FC = () => {
 									name={oscillatorType}
 									onClick={changeType}
 								></button>
-								<label className="text-xs">{oscillatorType}</label>
+								<label className="text-xs">{oscillatorType.charAt(0).toUpperCase() + oscillatorType.slice(1)}</label>
 							</div>
 						))}
 					</div>

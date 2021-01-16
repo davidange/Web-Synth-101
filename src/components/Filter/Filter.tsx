@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { context } from "../../context/Store";
 import * as actionTypes from "../../context/actions/actionTypes";
 import "../../styles/index.css";
+import Knob from "../CustomKnob/CustomKnob";
 
 const biquadFilterTypesUnusedParameters = {
 	allpass: ["gain"],
@@ -19,13 +20,12 @@ for (let key in biquadFilterTypesUnusedParameters) {
 	biquadFilterTypes.push(key);
 }
 
+let detuneMax = 200;
 const Filter: React.FC = () => {
 	const { state: appState, dispatch: updateState } = useContext(context);
 	let { frequency, detune, type, Q, gain } = appState.filterSettings;
-	const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let { value, name } = e.target;
-		console.log("CHANGING FILTER!!");
-		updateState({ type: actionTypes.CHANGE_FIL, payload: { id: name, value: +value } });
+	const change = (value: number, name: string) => {
+		updateState({ type: actionTypes.CHANGE_FIL, payload: { id: name, value: value } });
 	};
 	const changeType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		let name = (e.target as HTMLInputElement).name;
@@ -33,54 +33,96 @@ const Filter: React.FC = () => {
 	};
 
 	return (
-		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 flex flex-col justify-center text-center">
+		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 flex flex-col justify-center text-center lg:row-span-2">
 			<h2> Filter</h2>
-			<div>
-				<h3>frequency</h3>
-				<input onChange={change} max="10000" type="range" name="frequency" value={frequency} />
+			<div className="grid grid-cols-2 justify-center p-2 ">
+				<div className="m-2">
+					<h3>Frequency</h3>
+					<Knob
+						max={10000}
+						value={frequency}
+						onChange={(val) => change(val, "frequency")}
+						min={0}
+						preciseMode
+						step={1}
+						unlockDistance={50}
+						rotateDegrees={180}
+						clampMin={30}
+						clampMax={330}
+						style={{ margin: "0 auto" }}
+					/>
+					<h4>{frequency.toFixed(0)}</h4>
+				</div>
+				<div className="m-2">
+					<h3>Detune</h3>
+					<Knob
+						max={detuneMax}
+						value={detune}
+						onChange={(val) => change(val, "detune")}
+						min={0}
+						preciseMode
+						step={0.01}
+						unlockDistance={50}
+						rotateDegrees={180}
+						clampMin={30}
+						clampMax={330}
+						style={{ margin: "0 auto" }}
+					/>
+					<h4>{(detune / detuneMax).toFixed(2)}</h4>
+				</div>
+				<div className="m-2" hidden={(biquadFilterTypesUnusedParameters[type] as string[]).includes("Q")}>
+					<h3>Q</h3>
+					<Knob
+						max={10}
+						value={Q}
+						onChange={(val) => change(val, "Q")}
+						min={0}
+						preciseMode
+						step={0.1}
+						unlockDistance={50}
+						rotateDegrees={180}
+						clampMin={30}
+						clampMax={330}
+						style={{ margin: "0 auto" }}
+					/>
+					<h4>{Q.toFixed(2)}</h4>
+				</div>
+				<div className="m-2" hidden={(biquadFilterTypesUnusedParameters[type] as string[]).includes("gain")}>
+					<h3>Gain</h3>
+					<Knob
+						max={10}
+						value={gain}
+						onChange={(val) => change(val, "gain")}
+						min={0}
+						preciseMode
+						step={0.1}
+						unlockDistance={50}
+						rotateDegrees={180}
+						clampMin={30}
+						clampMax={330}
+						style={{ margin: "0 auto" }}
+					/>
+					<h4>{gain.toFixed(2)}</h4>
+				</div>
 			</div>
-			<div>
-				<h3>detune</h3>
-				<input onChange={change} type="range" name="detune" value={detune} />
-			</div>
-			<div>
-				<h3>Q</h3>
-				<input
-					onChange={change}
-					type="range"
-					name="Q"
-					value={Q}
-					max="10"
-					step="0.1"
-					disabled={(biquadFilterTypesUnusedParameters[type] as string[]).includes("Q")}
-				/>
-			</div>
-			<div>
-				<h3>gain</h3>
-				<input
-					onChange={change}
-					type="range"
-					name="gain"
-					value={gain}
-					max="10"
-					step="0.1"
-					disabled={(biquadFilterTypesUnusedParameters[type] as string[]).includes("gain")}
-				/>
-			</div>
-
 			<div className="flex flex-col m-2 ">
-				<h3>filterType</h3>
+				<h3>Filter</h3>
 				{/* Map the buttons of all the oscilator types */}
-				{biquadFilterTypes.map((filterType) => (
-					<button
-						className={"btn btn-secondary mt-2 " + ((type as string) === filterType ? "btn-secondary-active " : "")}
-						name={filterType}
-						key={filterType}
-						onClick={changeType}
-					>
-						{filterType}
-					</button>
-				))}
+				<div className="grid grid-cols-2">
+					{biquadFilterTypes.map((filterType) => (
+						<div className="flex items-center" key={filterType}>
+							<button
+								className={
+									"btn btn-secondary mt-2  mx-1 " + ((type as string) === filterType ? "btn-secondary-active " : "")
+								}
+								name={filterType}
+								key={filterType}
+								onClick={changeType}
+							/>
+							<label className="text-xs">{filterType.charAt(0).toUpperCase() + filterType.slice(1)}</label>
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);
