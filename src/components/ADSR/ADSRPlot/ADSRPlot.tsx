@@ -20,7 +20,7 @@ const ADSRPlot = (props: Props) => {
 	let { attack, decay, release, sustain, totalTime, style, className, size } = props;
 	//Default Value for TotalTime
 	let width: number = (size?.width as number) * 0.9;
-	let height = width * 0.5;
+	let height: number = (size?.height as number) * 0.9;
 	console.log(size);
 	console.log(width);
 	if (!totalTime) {
@@ -61,7 +61,7 @@ const ADSRPlot = (props: Props) => {
 			]);
 
 			//Curve
-			p5.fill(255,255,255,50);
+			p5.fill(255, 255, 255, 50);
 			p5.beginShape();
 			for (let i = 0; i < mappedCoordinates.length; i++) {
 				p5.vertex(mappedCoordinates[i][0], mappedCoordinates[i][1]);
@@ -90,4 +90,4 @@ const ADSRPlot = (props: Props) => {
 	);
 };
 
-export default sizeMe()(ADSRPlot);
+export default sizeMe({ monitorHeight: true })(ADSRPlot);

@@ -12,7 +12,7 @@ function App() {
 	return (
 		// ---Card component----------
 
-		<div className="grid  mx-auto p-6 bg-white">
+		<div className="grid  p-6 bg-white w-full">
 			<h1 className="mx-auto text-center text-3xl">Oscillator</h1>
 			<div className="grid grid-cols-2 sm:grid-cols-3 gap-4" >
 				<MasterAudio />
