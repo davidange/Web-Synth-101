@@ -90,7 +90,6 @@ function reducer(state: IState, action: Action) {
 		case actionTypes.CHANGE_MASTER_GAIN:
 			if (action.payload.id === "gain") {
 				masterGain.gain.value = action.payload.value;
-				console.log(action.payload.value);
 			}
 			return { ...state, masterGain: { ...state.masterGain, [action.payload.id]: action.payload.value } };
 		default:
@@ -121,7 +120,7 @@ export default function StoreProvider(props: { children: React.ReactNode }) {
 			release: 0.1,
 		},
 		masterGain: {
-			gain: filter.gain.value,
+			gain: masterGain.gain.value,
 		},
 	});
 	const value = { state, dispatch };

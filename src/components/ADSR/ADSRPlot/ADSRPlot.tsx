@@ -19,10 +19,8 @@ type Coordinates = [x: number, y: number];
 const ADSRPlot = (props: Props) => {
 	let { attack, decay, release, sustain, totalTime, style, className, size } = props;
 	//Default Value for TotalTime
-	let width: number = (size?.width as number) * 0.9;
-	let height: number = (size?.height as number) * 0.9;
-	console.log(size);
-	console.log(width);
+	let width: number = (size?.width as number) -16;
+	let height: number = (size?.height as number) -16;
 	if (!totalTime) {
 		totalTime = 5;
 	}
