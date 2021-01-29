@@ -34,20 +34,20 @@ interface IState {
 type Action = ChangeValueAction | ChangeTypeAction | MakeOSCAction | KillOSCAction;
 
 interface ChangeValueAction {
-	type: actionTypes.CHANGE_OSC1 | actionTypes.CHANGE_FIL | actionTypes.CHANGE_ENVELOPE | actionTypes.CHANGE_MASTER_GAIN;
+	type: typeof actionTypes.CHANGE_OSC1 | typeof actionTypes.CHANGE_FIL |typeof actionTypes.CHANGE_ENVELOPE | typeof actionTypes.CHANGE_MASTER_GAIN;
 	payload: { id: string; value: number };
 }
 interface ChangeTypeAction {
-	type: actionTypes.CHANGE_OSC1_TYPE | actionTypes.CHANGE_FIL_TYPE;
+	type: typeof actionTypes.CHANGE_OSC1_TYPE |typeof actionTypes.CHANGE_FIL_TYPE;
 	payload: { id: string };
 }
 
 interface MakeOSCAction {
-	type: actionTypes.MAKE_OSC;
+	type: typeof actionTypes.MAKE_OSC;
 	payload: { note: string; freq: number };
 }
 interface KillOSCAction {
-	type: actionTypes.KILL_OSC;
+	type: typeof actionTypes.KILL_OSC;
 	payload: { note: string; freq: number };
 }
 
