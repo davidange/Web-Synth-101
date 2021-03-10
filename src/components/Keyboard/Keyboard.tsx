@@ -4,7 +4,6 @@ import * as actionTypes from "../../context/actions/actionTypes";
 import { Piano, KeyboardShortcuts, MidiNumbers } from "react-piano";
 import "react-piano/dist/styles.css";
 import { getFrequency } from "../../util/notes";
-import sizeMe from "react-sizeme";
 
 const firstNote = MidiNumbers.fromNote("c3");
 const lastNote = MidiNumbers.fromNote("e4");
@@ -13,10 +12,8 @@ const keyboardShortcuts = KeyboardShortcuts.create({
 	lastNote: lastNote,
 	keyboardConfig: KeyboardShortcuts.BOTTOM_ROW,
 });
-interface Props {
-	size?: { height: number | null; width: number; position: number | null };
-}
-const Keyboard = ({ size }: Props) => {
+
+const Keyboard = () => {
 	const { dispatch: updateState } = useContext(context);
 	const keyboardPressed = (midiNumber: number) => {
 		// Play a given note - see notes below;
@@ -36,10 +33,9 @@ const Keyboard = ({ size }: Props) => {
 			noteRange={{ first: firstNote, last: lastNote }}
 			playNote={keyboardPressed}
 			stopNote={keyboardReleased}
-			width={size!.width-32}
 			keyboardShortcuts={keyboardShortcuts}
 		/>
 	);
 };
 
-export default sizeMe()(Keyboard);
+export default Keyboard;

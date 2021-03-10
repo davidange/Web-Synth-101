@@ -9,18 +9,21 @@ import "./styles/index.css";
 
 function App() {
 	return (
-		// ---Card component----------
-
-		<div className="grid  p-6 bg-white xl:mx-96 xl:mt-16 xl:rounded-xl shadow-2xl">
-			<h1 className="mx-auto text-center text-xl md:text-6xl">Web Synth 101</h1>
-			<div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-				<MasterAudio />
-				<Oscillator />
-				<ADSR />
-				<Filter />
-			</div>
-			<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-8 col-start-1 flex flex-col text-center ">
-				<Keyboard />
+		<div className="md:h-screen md:p-4 md:bg-blue-100">
+			{/* // ---Card component---------- */}
+			<div className="flex flex-col p-6 bg-white 2xl:mx-24 2xl:rounded-xl shadow-2xl md:h-full  ">
+				<h1 className="mx-auto text-center text-xl md:text-6xl">Web Synth 101</h1>
+				<div className="flex flex-col flex-grow ">
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4">
+						<MasterAudio />
+						<Oscillator />
+						<ADSR />
+						<Filter />
+					</div>
+					<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-8 col-start-1 flex flex-col text-center h-48  md:h-full  ">
+						<Keyboard />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

@@ -13,7 +13,7 @@ const MasterAudio = () => {
 		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 p-2 col-start-1 flex flex-col text-center">
 			<h2>Master Volume</h2>
 			<div className="mx-auto">
-				<h3>Volume</h3>
+				<h3 className=" inline-block">Volume</h3>
 				<Knob
 					max={1}
 					value={gain}

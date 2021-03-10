@@ -35,8 +35,8 @@ const Filter: React.FC = () => {
 	return (
 		<div className="bg-gray-300 rounded-lg shadow-xl mt-2 pt-4 flex flex-col  text-center md:row-span-2">
 			<h2> Filter</h2>
-			<div className="p-2">
-				<div className="grid grid-cols-2 justify-center p-2 lg:grid-cols-3 ">
+			<div className="p-2 flex flex-col justify-between h-full">
+				<div className="flex flex-row  justify-evenly flex-wrap ">
 					<div className="m-2">
 						<h3>Frequency</h3>
 						<Knob
@@ -107,7 +107,7 @@ const Filter: React.FC = () => {
 					</div>
 				</div>
 				<div className="flex flex-col m-2 ">
-					<h3>Filter</h3>
+					<h3>Filter Type:</h3>
 					{/* Map the buttons of all the oscilator types */}
 					<div className="grid grid-cols-2">
 						{biquadFilterTypes.map((filterType) => (
