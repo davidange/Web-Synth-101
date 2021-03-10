@@ -101,7 +101,7 @@ function reducer(state: IState, action: Action) {
 			}
 			return { ...state, masterGain: { ...state.masterGain, [action.payload.id]: action.payload.value } };
 		case actionTypes.START_AUDIO_CONTEXT:
-			if (state.audioContextResumed === true) {
+			if (state.audioContextResumed !== true) {
 				audioContext.resume().then(() => console.log("Playback Resumed"));
 			}
 			return { ...state, audioContextResumed: true };
