@@ -30,15 +30,20 @@ interface IState {
 	masterGain: {
 		gain: number;
 	};
+	audioContextResumed: boolean;
 }
-type Action = ChangeValueAction | ChangeTypeAction | MakeOSCAction | KillOSCAction;
+type Action = ChangeValueAction | ChangeTypeAction | MakeOSCAction | KillOSCAction | StartAudioContext;
 
 interface ChangeValueAction {
-	type: typeof actionTypes.CHANGE_OSC1 | typeof actionTypes.CHANGE_FIL |typeof actionTypes.CHANGE_ENVELOPE | typeof actionTypes.CHANGE_MASTER_GAIN;
+	type:
+		| typeof actionTypes.CHANGE_OSC1
+		| typeof actionTypes.CHANGE_FIL
+		| typeof actionTypes.CHANGE_ENVELOPE
+		| typeof actionTypes.CHANGE_MASTER_GAIN;
 	payload: { id: string; value: number };
 }
 interface ChangeTypeAction {
-	type: typeof actionTypes.CHANGE_OSC1_TYPE |typeof actionTypes.CHANGE_FIL_TYPE;
+	type: typeof actionTypes.CHANGE_OSC1_TYPE | typeof actionTypes.CHANGE_FIL_TYPE;
 	payload: { id: string };
 }
 
@@ -49,6 +54,9 @@ interface MakeOSCAction {
 interface KillOSCAction {
 	type: typeof actionTypes.KILL_OSC;
 	payload: { note: string; freq: number };
+}
+interface StartAudioContext {
+	type: typeof actionTypes.START_AUDIO_CONTEXT;
 }
 
 function reducer(state: IState, action: Action) {
@@ -92,6 +100,11 @@ function reducer(state: IState, action: Action) {
 				masterGain.gain.value = action.payload.value;
 			}
 			return { ...state, masterGain: { ...state.masterGain, [action.payload.id]: action.payload.value } };
+		case actionTypes.START_AUDIO_CONTEXT:
+			if (state.audioContextResumed === true) {
+				audioContext.resume().then(() => console.log("Playback Resumed"));
+			}
+			return { ...state, audioContextResumed: true };
 		default:
 			return { ...state };
 	}
@@ -122,6 +135,7 @@ export default function StoreProvider(props: { children: React.ReactNode }) {
 		masterGain: {
 			gain: masterGain.gain.value,
 		},
+		audioContextResumed: false,
 	});
 	const value = { state, dispatch };
 	return <context.Provider value={value}>{props.children}</context.Provider>;

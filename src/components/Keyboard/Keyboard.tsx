@@ -19,6 +19,7 @@ const Keyboard = () => {
 		// Play a given note - see notes below;
 		let note = MidiNumbers.getAttributes(midiNumber).note;
 		let frequency = getFrequency(MidiNumbers.getAttributes(midiNumber).note);
+		updateState({ type: actionTypes.START_AUDIO_CONTEXT });
 		updateState({ type: actionTypes.MAKE_OSC, payload: { note, freq: frequency } });
 	};
 
